@@ -1,5 +1,11 @@
 # Ether Profanity
 
+![](https://img.shields.io/github/actions/workflow/status/GG4mida/profanity-ether/release.yml)
+![](https://img.shields.io/badge/baseon-gpu-yellowgreen.svg)
+![](https://img.shields.io/badge/language-c,c++-orange.svg)
+![](https://img.shields.io/badge/platform-windows,linux-yellow.svg)
+![](https://img.shields.io/badge/telegram-@jackslowfak-blue.svg)
+
 以太坊（ETH）靓号生成器，利用 `gpu` 进行加速。代码开源，安全可靠 🔥
 
 <img width="100%" src="https://github.com/GG4mida/profanity-ether/blob/master/screenshot/demo.png?raw=true"/>
@@ -21,9 +27,12 @@
 
 ### Windows
 
-下载 `dist/windows.zip`，解压，然后直接运行 `start.bat` 即可。
+前往 [Release](https://github.com/GG4mida/profanity-ether/releases) 页面下载发布包，本地解压后直接运行 `start.bat` 即可。
 
 > 请参考下文 `命令 & 参数` 章节说明，自行编辑 `start.bat` 配置运行参数。
+
+> 相关 `Release` 自动构建脚本，可参考：[github action 配置](https://github.com/GG4mida/profanity-ether/blob/master/.github/workflows/release.yml)
+
 
 ### Mac
 
