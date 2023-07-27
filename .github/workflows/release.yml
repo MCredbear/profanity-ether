@@ -36,7 +36,6 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           artifacts: "${{ github.workspace }}/dist/profanity.exe,${{ github.workspace }}/dist/README.md,${{ github.workspace }}/dist/start.bat,${{ github.workspace }}/profanity.txt"
-          token: ${{ secrets.GH_TOKEN }}
           tag: v1.1.0
           draft: true
           allowUpdates: true
