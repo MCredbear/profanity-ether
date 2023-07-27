@@ -14,6 +14,8 @@ class SpeedSample {
 		double getSpeed() const;
 		void sample(const double V);
 
+		uint64_t count = 0;
+
 	private:
 		static timepoint now();
 

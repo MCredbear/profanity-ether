@@ -10,7 +10,10 @@
 #include <algorithm>
 
 #include "precomp.hpp"
+
+
 #include <curl/curl.h>
+
 
 static std::string toHex(const uint8_t *const s, const size_t len)
 {
@@ -140,7 +143,8 @@ Dispatcher::Device::~Device()
 {
 }
 
-Dispatcher::Dispatcher(cl_context &clContext,
+Dispatcher::Dispatcher(uint64_t limit_count,
+					   cl_context &clContext,
 					   cl_program &clProgram,
 					   const Mode mode,
 					   const size_t worksizeMax,
@@ -149,7 +153,8 @@ Dispatcher::Dispatcher(cl_context &clContext,
 					   const cl_uchar clScoreQuit,
 						 const std::string & outputFile,
 						 const std::string & postUrl)
-	: m_clContext(clContext),
+	: limit_count(limit_count),
+	  m_clContext(clContext),
 	  m_clProgram(clProgram),
 	  m_mode(mode),
 	  m_worksizeMax(worksizeMax),
@@ -541,11 +546,13 @@ void Dispatcher::onEvent(cl_event event, cl_int status, Device &d)
 			dispatch(d);
 		}
 	}
+	
 }
 
 void Dispatcher::printSpeed()
 {
 	++m_countPrint;
+	uint64_t count = 0;
 	if (m_countPrint > m_vDevices.size())
 	{
 		std::string strGPUs;
@@ -554,6 +561,7 @@ void Dispatcher::printSpeed()
 		for (auto &e : m_vDevices)
 		{
 			const auto curSpeed = e->m_speed.getSpeed();
+			count += e->m_speed.count;
 			speedTotal += curSpeed;
 			strGPUs += " GPU" + toString(e->m_index) + ": " + formatSpeed(curSpeed);
 			++i;
@@ -562,6 +570,12 @@ void Dispatcher::printSpeed()
 		const std::string strVT100ClearLine = "\33[2K\r";
 		std::cerr << strVT100ClearLine << "Total: " << formatSpeed(speedTotal) << " -" << strGPUs << '\r' << std::flush;
 		m_countPrint = 0;
+
+		auto seconds = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - timeStart).count();
+		if (count > limit_count) {
+			printf("out of count\n");
+			exit(0);
+		}
 	}
 }
 

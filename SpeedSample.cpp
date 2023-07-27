@@ -33,6 +33,7 @@ void SpeedSample::sample(const double V) {
 	if (m_lSpeeds.size() > m_length) {
 		m_lSpeeds.pop_front();
 	}
+	count += V;
 }
 
 SpeedSample::timepoint SpeedSample::now() {

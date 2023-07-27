@@ -163,6 +163,7 @@ int main(int argc, char **argv)
 	try
 	{
 		ArgParser argp(argc, argv);
+		uint64_t limit_count = 0xffffffffffffffff;
 		bool bHelp = false;
 
 		std::string matchingInput;
@@ -179,6 +180,7 @@ int main(int argc, char **argv)
 		size_t suffixCount = 8;
 		size_t quitCount = 0;
 
+		argp.addSwitch('c', "limit-count", limit_count);
 		argp.addSwitch('h', "help", bHelp);
 		argp.addSwitch('m', "matching", matchingInput);
 		argp.addSwitch('w', "work", worksizeLocal);
@@ -357,7 +359,7 @@ int main(int argc, char **argv)
 
 		std::cout << std::endl;
 
-		Dispatcher d(clContext, clProgram, mode, worksizeMax == 0 ? inverseSize * inverseMultiple : worksizeMax, inverseSize, inverseMultiple, quitCount, outputFile, postUrl);
+		Dispatcher d(limit_count, clContext, clProgram, mode, worksizeMax == 0 ? inverseSize * inverseMultiple : worksizeMax, inverseSize, inverseMultiple, quitCount, outputFile, postUrl);
 
 		for (auto &i : vDevices)
 		{
